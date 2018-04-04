@@ -1,3 +1,176 @@
 //  This file was automatically generated and should not be edited.
 
 import Apollo
+
+public final class BookQuery: GraphQLQuery {
+  public static let operationString =
+    "query Book($isbn: String) {\n  Book(isbn: $isbn) {\n    __typename\n    isbn\n    authors {\n      __typename\n      name\n      coauthors {\n        __typename\n        name\n      }\n    }\n  }\n}"
+
+  public var isbn: String?
+
+  public init(isbn: String? = nil) {
+    self.isbn = isbn
+  }
+
+  public var variables: GraphQLMap? {
+    return ["isbn": isbn]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("Book", arguments: ["isbn": GraphQLVariable("isbn")], type: .object(Book.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(book: Book? = nil) {
+      self.init(snapshot: ["__typename": "Query", "Book": book.flatMap { $0.snapshot }])
+    }
+
+    public var book: Book? {
+      get {
+        return (snapshot["Book"] as? Snapshot).flatMap { Book(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "Book")
+      }
+    }
+
+    public struct Book: GraphQLSelectionSet {
+      public static let possibleTypes = ["Book"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("isbn", type: .nonNull(.scalar(String.self))),
+        GraphQLField("authors", type: .list(.nonNull(.object(Author.selections)))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(isbn: String, authors: [Author]? = nil) {
+        self.init(snapshot: ["__typename": "Book", "isbn": isbn, "authors": authors.flatMap { $0.map { $0.snapshot } }])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var isbn: String {
+        get {
+          return snapshot["isbn"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "isbn")
+        }
+      }
+
+      public var authors: [Author]? {
+        get {
+          return (snapshot["authors"] as? [Snapshot]).flatMap { $0.map { Author(snapshot: $0) } }
+        }
+        set {
+          snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "authors")
+        }
+      }
+
+      public struct Author: GraphQLSelectionSet {
+        public static let possibleTypes = ["Author"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("name", type: .nonNull(.scalar(String.self))),
+          GraphQLField("coauthors", type: .list(.nonNull(.object(Coauthor.selections)))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(name: String, coauthors: [Coauthor]? = nil) {
+          self.init(snapshot: ["__typename": "Author", "name": name, "coauthors": coauthors.flatMap { $0.map { $0.snapshot } }])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var name: String {
+          get {
+            return snapshot["name"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "name")
+          }
+        }
+
+        public var coauthors: [Coauthor]? {
+          get {
+            return (snapshot["coauthors"] as? [Snapshot]).flatMap { $0.map { Coauthor(snapshot: $0) } }
+          }
+          set {
+            snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "coauthors")
+          }
+        }
+
+        public struct Coauthor: GraphQLSelectionSet {
+          public static let possibleTypes = ["Author"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("name", type: .nonNull(.scalar(String.self))),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(name: String) {
+            self.init(snapshot: ["__typename": "Author", "name": name])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var name: String {
+            get {
+              return snapshot["name"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "name")
+            }
+          }
+        }
+      }
+    }
+  }
+}
