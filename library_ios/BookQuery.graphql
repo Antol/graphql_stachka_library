@@ -2,10 +2,15 @@ query Book($isbn: String){
     Book(isbn: $isbn) {
         isbn
         authors {
+            id
             name
-            coauthors {
-                name
-            }
         }
+    }
+}
+
+mutation UpdateAuthor($name: String){
+    updateAuthor(id: "cjfl7oz4fcmmy01170cmlwpi5", name: $name) {
+        id
+        name
     }
 }
