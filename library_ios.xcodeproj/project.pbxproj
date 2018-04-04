@@ -96,6 +96,7 @@
 			buildConfigurationList = 5A29D93C20756C0F006C1993 /* Build configuration list for PBXNativeTarget "library_ios" */;
 			buildPhases = (
 				78BF9BCEDB978AFE78DA8EF2 /* [CP] Check Pods Manifest.lock */,
+				5A29D93F20756E17006C1993 /* ShellScript */,
 				5A29D92620756C0F006C1993 /* Sources */,
 				5A29D92720756C0F006C1993 /* Frameworks */,
 				5A29D92820756C0F006C1993 /* Resources */,
@@ -159,6 +160,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5A29D93F20756E17006C1993 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "apollo-codegen download-schema https://api.graph.cool/simple/v1/cjfl6xykr22kb016804p2xnpw --output \"${SRCROOT}/${TARGET_NAME}/CommonServices/API/schema.json\"\n\nAPOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema CommonServices/API/schema.json --output CommonServices/API/API.swift --passthrough-custom-scalars\n";
+		};
 		78BF9BCEDB978AFE78DA8EF2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
