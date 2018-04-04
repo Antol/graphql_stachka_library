@@ -17,7 +17,8 @@ class ViewController: UIViewController {
         
         let apollo = ApolloClient(url: url)
         
-        apollo.watch(query: BookQuery(isbn: "1234")) { (result, error) in
+        //1
+        apollo.fetch(query: BookQuery(isbn: "1234")) { (result, error) in
             guard let authorName = result?.data?.book?.authors?.first?.name else {
                 return
             }
